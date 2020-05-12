@@ -1,0 +1,33 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+
+apply from: "$project.rootDir/gradle/scripts/common-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/kotlin-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/testing-android-unit.gradle"
+
+android {
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // AndroidX annotations
+    api "androidx.annotation:annotation:$ver_androidx_annotations"
+
+    // RxJava
+    api "io.reactivex.rxjava2:rxjava:$ver_rxjava"
+    api "io.reactivex.rxjava2:rxkotlin:$ver_rxkotlin"
+    api "io.reactivex.rxjava2:rxandroid:$ver_rxandroid"
+
+    // JSR-310 Android backport (until minsdk 26)
+    api "com.jakewharton.threetenabp:threetenabp:$ver_jsr310_bp"
+
+    // Timber logging
+    api "com.jakewharton.timber:timber:$ver_timber"
+
+    testImplementation project(":lib-test-common")
+}

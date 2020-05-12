@@ -1,0 +1,38 @@
+### Android local configuration file (sdk path, etc)
+/local.properties
+
+### Android Studio
+/.navigation
+/captures
+gen-external-apklibs
+
+### NDK
+obj/
+cmake-build-*/
+.externalNativeBuild
+.cxx
+
+### Gradle files
+.gradle/
+build/
+
+### Generated files
+bin/
+gen/
+out/
+
+### IntelliJ IDEA
+.idea/
+.idea_modules/
+*.iml
+
+### System specific files
+.DS_Store
+Thumbs.db
+
+### JVM crash logs (Reference: http://www.java.com/en/download/help/error_hotspot.xml)
+hs_err_pid*
+
+### Project specific
+keystore.properties
+settings/keystore/release/myawesomeapp.keystore

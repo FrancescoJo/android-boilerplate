@@ -1,0 +1,65 @@
+apply plugin: "com.android.library"
+
+apply from: "$project.rootDir/gradle/scripts/common-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/kotlin-android.gradle"
+
+android {
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+detekt {
+    failFast = true
+    disableDefaultRuleSets = true
+}
+
+/*
+ * Considering the purpose of this module, all dependencies must reflect every dependency declarations
+ * in 'gradle/scripts/testing-android.unit.gradle' except test runners.
+ */
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //// region common test dependencies
+    // AndroidX
+    implementation "androidx.annotation:annotation:$ver_androidx_annotations"
+
+    // AndroidX test
+    implementation "androidx.test:runner:$ver_androidx_test"
+    implementation "androidx.test:core:$ver_androidx_test"
+    implementation "androidx.test:rules:$ver_androidx_test"
+
+    // Robolectric
+    implementation("org.robolectric:robolectric:$ver_robolectric") {
+        exclude group : "com.google.auto.service", module : "auto-service"
+    }
+    implementation "org.robolectric:shadows-multidex:$ver_robolectric"
+
+    // JUnit vintage
+    implementation "junit:junit:$ver_junit_vintage"
+
+    // JVM mock proxy object generator
+    implementation "org.mockito:mockito-core:$ver_mockito_core"
+
+    // Assertions
+    implementation "org.hamcrest:hamcrest:$ver_hamcrest"
+    //// endregion
+
+    //// region `app-lib` dependencies
+    // AndroidX annotations
+    implementation "androidx.annotation:annotation:$ver_androidx_annotations"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$ver_rxjava"
+    implementation "io.reactivex.rxjava2:rxkotlin:$ver_rxkotlin"
+    implementation "io.reactivex.rxjava2:rxandroid:$ver_rxandroid"
+
+    // JSR-310 Android backport (until minsdk 26)
+    implementation "com.jakewharton.threetenabp:threetenabp:$ver_jsr310_bp"
+
+    // Timber logging
+    implementation "com.jakewharton.timber:timber:$ver_timber"
+    //// endregion
+}

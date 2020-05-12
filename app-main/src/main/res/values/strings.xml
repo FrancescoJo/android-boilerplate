@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AwesomeApp</string>
+    <string name="item_photo_list_author">Author: %1$s</string>
+    <!-- width x height (@id) -->
+    <string name="item_photo_list_info">%1$s x %2$s (%3$s)</string>
+
+    <string name="err_general_error">An error was occurred.</string>
+</resources>

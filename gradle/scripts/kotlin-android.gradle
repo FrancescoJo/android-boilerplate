@@ -1,0 +1,42 @@
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+apply plugin: "kotlin-allopen"
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+kapt {
+    // generateStubs true
+    correctErrorTypes true
+}
+
+allOpen {
+    annotation("com.github.fj.android.annotation.AllOpen")
+}
+
+android {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+        // androidTest.java.srcDirs += "src/test/kotlin"
+    }
+}
+
+detekt {
+    failFast = true
+    config = files("$project.rootDir/settings/detekt.yml")
+
+    reports {
+        html.enabled = true // observe findings in your browser with structure and code snippets
+        xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+        txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$ver_kotlin"
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$ver_detekt"
+}

@@ -1,0 +1,116 @@
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+
+apply from: "$project.rootDir/gradle/scripts/common-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/kotlin-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/testing-android-unit.gradle"
+apply from: "$project.rootDir/gradle/scripts/di-android-dagger2.gradle"
+apply from: "$project.rootDir/gradle/scripts/deployment-git.gradle"
+apply from: "build-config-values.gradle"
+
+android {
+    defaultConfig {
+        applicationId "com.github.fj.android.awesomeapp"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        ext {
+            keystoreFile = "keystore.properties"
+            // per each modules
+            proguardDir = "proguard"
+        }
+
+        release {
+            try {
+                def keystorePropertiesFile = rootProject.file(keystoreFile)
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+                storeFile file(keystoreProperties["storeFile"])
+                storePassword keystoreProperties["storePassword"]
+                keyAlias keystoreProperties["keyAlias"]
+                keyPassword keystoreProperties["keyPassword"]
+            } catch (final IOException e) {
+                System.err.println("WARN: Unable to locate $keystoreFile.")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".alpha"
+        }
+        alpha {
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile("proguard-android.txt")
+            file(signingConfigs.proguardDir).listFiles().each { proguardFile it }
+            minifyEnabled true
+            debuggable true
+            applicationIdSuffix ".alpha"
+        }
+        beta {
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile("proguard-android.txt")
+            file(signingConfigs.proguardDir).listFiles().each { proguardFile it }
+            minifyEnabled true
+            debuggable false
+            applicationIdSuffix ".beta"
+
+            // Required because of Fresco library
+            splits {
+                abi {
+                    enable true
+                    // Resets the list of ABIs that Gradle should create APKs for to none.
+                    reset()
+                    include "x86", "x86_64", "armeabi-v7a", "arm64-v8a"
+                    universalApk true
+                }
+            }
+        }
+        release {
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile("proguard-android.txt")
+            file(signingConfigs.proguardDir).listFiles().each { proguardFile it }
+            minifyEnabled true
+            debuggable false
+
+            // Required because of Fresco library
+            splits {
+                abi {
+                    enable true
+                    // Resets the list of ABIs that Gradle should create APKs for to none.
+                    reset()
+                    include "x86", "x86_64", "armeabi-v7a", "arm64-v8a"
+                    universalApk true
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":app-core")
+    implementation project(":app-lib")
+
+    implementation "com.google.android.material:material:$ver_material"
+
+    implementation "androidx.appcompat:appcompat:$ver_androidx_appcompat"
+    implementation "androidx.core:core-ktx:$ver_androidx_ktx"
+    implementation "androidx.lifecycle:lifecycle-extensions:$ver_androidx_lifecycle"
+    implementation "androidx.recyclerview:recyclerview:$ver_androidx_recyclerview"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$ver_androidx_coordinatorLayout"
+    implementation "androidx.constraintlayout:constraintlayout:$ver_androidx_constraintLayout"
+
+    implementation "com.facebook.fresco:fresco:$ver_fresco"
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    testImplementation project(":lib-test-common")
+}

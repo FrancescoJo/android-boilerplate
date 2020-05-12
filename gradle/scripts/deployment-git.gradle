@@ -1,0 +1,143 @@
+import java.util.regex.Pattern
+import java.util.regex.Matcher
+
+import org.gradle.internal.logging.text.StyledTextOutputFactory
+import org.gradle.internal.logging.text.StyledTextOutput.Style
+
+/*
+ * This script generates an automatic version metadata using git.
+ */
+buildscript {
+    def isNullOrEmpty = { s -> return s == null || s.isEmpty() }
+
+    String gitSha = "git rev-parse --short HEAD".execute([], project.rootDir).text.trim()
+    if (isNullOrEmpty(gitSha)) {
+        gitSha = "0000000"
+    }
+
+    String gitTag = "git describe --tags --abbrev=0".execute([], project.rootDir).text.trim()
+    if (isNullOrEmpty(gitTag)) {
+        gitTag = ""
+    }
+
+    String gitCommitCount = "git rev-list --count HEAD".execute([], project.rootDir).text.trim()
+    if (isNullOrEmpty(gitCommitCount)) {
+        gitCommitCount = "0"
+    }
+
+    String branchName = "git rev-parse --abbrev-ref HEAD".execute([], project.rootDir).text.trim()
+    if (isNullOrEmpty(gitCommitCount)) {
+        branchName = ""
+    }
+
+    int major = 0
+    int minor = 0
+    int patch = 0
+    String preRelease = ""
+    String buildMetadata = ""
+
+    // Parse git tag as semantic version
+    if (!isNullOrEmpty(gitTag)) {
+        Pattern p = Pattern.compile("""(0|[1-9]\\d*)?(?:\\.)?(0|[1-9]\\d*)?(?:\\.)?(0|[1-9]\\d*)?(?:-([\\dA-z\\-]+(?:\\.[\\dA-z\\-]+)*))?(?:\\+([\\dA-z\\-]+(?:\\.[\\dA-z\\-]+)*))?""")
+        Matcher m = p.matcher(gitTag)
+
+        if (m.find()) {
+            def majorStr = m.group(1)
+            def minorStr = m.group(2)
+            def patchStr = m.group(3)
+            def preReleaseStr = m.group(4)
+            def metadataStr = m.group(5)
+
+            if (!isNullOrEmpty(majorStr)) {
+                major = Integer.parseInt(majorStr)
+            }
+            if (!isNullOrEmpty(minorStr)) {
+                minor = Integer.parseInt(minorStr)
+            }
+            if (!isNullOrEmpty(patchStr)) {
+                patch = Integer.parseInt(patchStr)
+            }
+            if (preReleaseStr != null) {
+                preRelease = preReleaseStr
+            }
+            if (metadataStr != null) {
+                buildMetadata = metadataStr
+            }
+        }
+    }
+
+    ext.versioning_sha = gitSha
+    ext.versioning_tag = gitTag
+    ext.versioning_commitCount = Integer.parseInt(gitCommitCount)
+    ext.versioning_buildTime = new Date().format("yyyy-MM-dd HH:mm':00 UTC'", TimeZone.getTimeZone("UTC"))
+    ext.versioning_branchName = branchName
+    ext.versioning_major = major
+    ext.versioning_minor = minor
+    ext.versioning_patch = patch
+    ext.versioning_preRelease = preRelease
+    ext.versioning_builidMetadata = buildMetadata
+}
+
+android {
+    defaultConfig {
+        def isAssembleTask = (project.gradle.startParameter.taskNames.findIndexOf {
+            return it.indexOf("assemble") > -1
+        }) > -1
+
+        // Consider 'beta', 'release' is a public build
+        def isPublicBuild = (project.gradle.startParameter.taskNames.findIndexOf {
+            return indexOf(Pattern.compile("(beta)|(release)", Pattern.CASE_INSENSITIVE), it) > -1
+        }) > -1
+
+        // Default version values for fallback
+        int verCode = versioning_commitCount * 10
+        String verName = "git-${versioning_sha}@${versioning_branchName} (commit #$versioning_commitCount)"
+
+        if (versioning_major == 0) {
+            if (isAssembleTask) {
+                def out = services.get(StyledTextOutputFactory).create("ansi-output")
+                def styleBuilder
+
+                if (isPublicBuild) {
+                    styleBuilder = out.style(Style.Failure)
+                } else {
+                    styleBuilder = out.style(Style.Info)
+                }
+
+                styleBuilder.text("No major version is specified for this branch.\n")
+                        .text("Please set a semantic version as git tag on this branch before public build.")
+                        .println()
+
+                if (isPublicBuild) {
+                    throw new GradleException("Cannot determine versionCode and versionName for packaging")
+                }
+            }
+        } else {
+            verCode = versioning_major * 1000 + versioning_minor * 100 + versioning_patch
+            verName = "$versioning_major.$versioning_minor.$versioning_patch"
+            if (!isNullOrEmpty(versioning_preRelease)) {
+                verName = "$verName-$versioning_preRelease"
+            }
+            if (!isNullOrEmpty(versioning_preRelease)) {
+                verName = "$verName+$versioning_builidMetadata"
+            }
+        }
+
+        versionCode verCode
+        versionName verName
+
+        if (isAssembleTask) {
+            println("Package version code: $verCode")
+            println("Package version name: $verName")
+        }
+    }
+}
+
+private static int indexOf(final Pattern pattern, final String s) {
+    Matcher matcher = pattern.matcher(s);
+    return matcher.find() ? matcher.start() : -1
+}
+
+private static boolean isNullOrEmpty(final String s) {
+    return s == null || s.isEmpty()
+}

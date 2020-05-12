@@ -1,0 +1,6 @@
+rootProject.name = 'AwesomeApp'
+include ':app-main',
+        ':app-core',
+        ':app-data',
+        ':app-lib',
+        ':lib-test-common'

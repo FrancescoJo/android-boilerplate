@@ -1,0 +1,25 @@
+android {
+    buildTypes {
+        // More resource types: https://developer.android.com/guide/topics/resources/more-resources
+        debug {
+            buildConfigField "String", "BASE_API_URL", "\"https://picsum.photos\""
+
+            // resValue "string", "some_sdk_id", ""
+        }
+        alpha {
+            buildConfigField "String", "BASE_API_URL", "\"https://picsum.photos\""
+
+            // resValue "string", "some_sdk_id", ""
+        }
+        beta {
+            buildConfigField "String", "BASE_API_URL", "\"https://picsum.photos\""
+
+            // resValue "string", "some_sdk_id", ""
+        }
+        release {
+            buildConfigField "String", "BASE_API_URL", "\"https://picsum.photos\""
+
+            // resValue "string", "some_sdk_id", ""
+        }
+    }
+}

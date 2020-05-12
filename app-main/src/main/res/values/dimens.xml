@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="item_photo_list_height">96dp</dimen>
+    <dimen name="item_photo_thumb_width">96dp</dimen>
+    <dimen name="item_photo_thumb_height">96dp</dimen>
+</resources>

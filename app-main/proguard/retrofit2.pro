@@ -1,0 +1,1 @@
+app-data/proguard/retrofit2.pro

@@ -1,0 +1,29 @@
+// This configuration works only if 'com.android.application' or 'com.android.library' Gradle plugin
+// is applied in your build configuration.
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.0"
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        debug { }
+        alpha { }
+        beta { }
+        release { }
+    }
+
+    lintOptions {
+        checkReleaseBuilds true
+        abortOnError false
+        lintConfig file("$project.rootDir/settings/lint-common.xml")
+    }
+}

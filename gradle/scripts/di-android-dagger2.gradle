@@ -1,0 +1,8 @@
+apply plugin: "kotlin-kapt"
+
+dependencies {
+    implementation "com.google.dagger:dagger-android:$ver_dagger2"
+    implementation "com.google.dagger:dagger-android-support:$ver_dagger2"
+    kapt "com.google.dagger:dagger-android-processor:$ver_dagger2"
+    kapt "com.google.dagger:dagger-compiler:$ver_dagger2"
+}

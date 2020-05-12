@@ -1,0 +1,67 @@
+apply from: "$project.rootDir/gradle/scripts/test-aggregator.gradle"
+
+buildscript {
+    ext {
+        // Language core
+        ver_kotlin = "1.3.72"
+        ver_jsr310_bp = "1.2.1"
+
+        // Android
+        ver_androidx_appcompat = "1.1.0"
+        ver_androidx_ktx = "1.2.0"
+        ver_androidx_lifecycle = "2.2.0"
+        ver_androidx_recyclerview = "1.1.0"
+        ver_androidx_annotations = "1.1.0"
+        ver_androidx_coordinatorLayout = "1.1.0"
+        ver_androidx_constraintLayout = "1.1.3"
+        ver_material = "1.1.0"
+
+        // 3rdparty
+        ver_rxjava = "2.2.9"
+        ver_rxkotlin = "2.3.0"
+        ver_rxandroid = "2.1.1"
+        ver_retrofit = "2.8.1"
+        ver_moshi = "1.9.2"
+        ver_fresco = "2.2.0"
+        ver_timber = "4.7.1"
+        ver_okhttp = "4.7.2"
+
+        // Code quality & Testing
+        ver_dagger2 = "2.15"
+        ver_detekt = "1.8.0"
+        ver_jacoco = "0.8.5"
+        ver_androidx_test = "1.2.0"
+        ver_robolectric = "4.3"
+        ver_mockito_core = "3.2.4"
+        ver_hamcrest = "2.2"
+        ver_junit_vintage = "4.13"
+    }
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:3.6.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver_kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$ver_kotlin"
+
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$ver_detekt"
+        classpath "org.jacoco:org.jacoco.core:$ver_jacoco"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

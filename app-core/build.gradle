@@ -1,0 +1,26 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+
+apply from: "$project.rootDir/gradle/scripts/common-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/kotlin-android.gradle"
+apply from: "$project.rootDir/gradle/scripts/testing-android-unit.gradle"
+apply from: "$project.rootDir/gradle/scripts/di-android-dagger2.gradle"
+
+android {
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":app-data")
+    implementation project(":app-lib")
+
+    implementation "androidx.appcompat:appcompat:$ver_androidx_appcompat"
+    implementation "androidx.core:core-ktx:$ver_androidx_ktx"
+    implementation "androidx.lifecycle:lifecycle-extensions:$ver_androidx_lifecycle"
+
+    testImplementation project(":lib-test-common")
+}

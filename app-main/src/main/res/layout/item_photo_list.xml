@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_photo_list_height">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/vPhotoThumb"
+        android:layout_width="@dimen/item_photo_thumb_width"
+        android:layout_height="@dimen/item_photo_thumb_height"
+        android:contentDescription="@string/item_photo_list_vPhotoThumb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/vPhotoAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="12dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/vPhotoThumb"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Author: Lorem Picsum" />
+
+    <TextView
+        android:id="@+id/vPhotoDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="12dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vPhotoThumb"
+        tools:text="1600x1200 (@cafebabe)" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

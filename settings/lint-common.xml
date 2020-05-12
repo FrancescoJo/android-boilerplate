@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="all">
+        <ignore path=".gradle/*" />
+        <ignore path="**/test/*" />
+        <ignore path="**/*.jar" />
+    </issue>
+</lint>

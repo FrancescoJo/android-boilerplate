@@ -1,0 +1,42 @@
+/*
+ * This configuration is using JUnit4, with several drawbacks:
+ *
+ * - Currently(Nov. 2019) Spek2 is not very well integrated with Robolectric test runner
+ *   https://github.com/spekframework/spek/issues/65
+ *
+ * - Similar issues in JUnit 5:
+ *   https://github.com/robolectric/robolectric/issues/3397
+ *
+ * - Spock framework(the best for writing tests) is incompatible with Gradle 6+
+ *   https://github.com/groovy/groovy-android-gradle-plugin
+ *
+ * Hope JUnit 5 (the worst, among Spek2 / Spock) is supported in Android testing world soon.
+ */
+android {
+    testOptions {
+        // For Robolectric test
+        unitTests.includeAndroidResources = true
+    }
+}
+
+dependencies {
+    // AndroidX test
+    testImplementation "androidx.test:runner:$ver_androidx_test"
+    testImplementation "androidx.test:core:$ver_androidx_test"
+    testImplementation "androidx.test:rules:$ver_androidx_test"
+
+    // Robolectric
+    testImplementation("org.robolectric:robolectric:$ver_robolectric") {
+        exclude group : "com.google.auto.service", module : "auto-service"
+    }
+    testImplementation "org.robolectric:shadows-multidex:$ver_robolectric"
+
+    // JUnit vintage
+    testImplementation "junit:junit:$ver_junit_vintage"
+
+    // JVM mock proxy object generator
+    testImplementation "org.mockito:mockito-core:$ver_mockito_core"
+
+    // Assertions
+    testImplementation "org.hamcrest:hamcrest:$ver_hamcrest"
+}
