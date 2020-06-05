@@ -1,9 +1,3 @@
-/*
- * Copyright 2020 Hyperconnect inc. All rights reserved.
- *
- * Hyperconnect inc. intellectual property.
- * Use of this software is subject to licence terms.
- */
 package testcase.content
 
 import android.content.SharedPreferences
@@ -20,7 +14,7 @@ import test.com.github.fj.android.util.randomUInt
 import testcase.UnitTestBase
 
 /**
- * @author Hwan Jo(hwan.cho@hpcnt.com)
+ * @author Francesco Jo(nimbusob@gmail.com)
  * @since 28 - May - 2020
  */
 class SharedPreferencesWrapperTest : UnitTestBase() {

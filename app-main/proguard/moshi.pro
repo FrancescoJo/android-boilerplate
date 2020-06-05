@@ -1,1 +1,1 @@
-app-data/proguard/moshi.pro
+../../app-core/proguard/moshi.pro

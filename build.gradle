@@ -8,7 +8,7 @@ buildscript {
 
         // Android
         ver_androidx_appcompat = "1.1.0"
-        ver_androidx_ktx = "1.2.0"
+        ver_androidx_ktx = "1.3.0"
         ver_androidx_lifecycle = "2.2.0"
         ver_androidx_recyclerview = "1.1.0"
         ver_androidx_annotations = "1.1.0"
@@ -43,7 +43,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:3.6.3"
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver_kotlin"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$ver_kotlin"
 

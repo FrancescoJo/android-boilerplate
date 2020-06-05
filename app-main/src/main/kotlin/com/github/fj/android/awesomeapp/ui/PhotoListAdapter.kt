@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.fj.android.awesomeapp.R
-import com.github.fj.android.awesomeapp.model.photo.ImageDetail
+import com.github.fj.android.awesomeapp.core.photo.model.ImageDetail
 import com.github.fj.android.display.dpToPx
 import com.github.fj.android.util.getDimen
 import com.github.fj.android.util.getString

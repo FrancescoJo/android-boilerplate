@@ -8,8 +8,7 @@ please read [#pros-and-cons] before start.
 | Module name     | Description                                                                                       |
 | :---            | :---                                                                                              |
 | app-main        | Contains UI and UI manipulation logic. Directly depends on `app-core`, `app-lib`, `lib-xxx`, etc. |
-| app-core        | Business logic layer, abstracts underlying `app-data`. Consumed only by `app-main`.               |
-| app-data        | Data logic layer, abstracts `DataSource`. Consumed only by `app-core`.                            |
+| app-core        | Business logic layer, abstracts business logic and `DataSource`. Consumed only by `app-main`.     |
 | app-lib         | Library logic layer, independent to business logic                                                |
 | lib-xxx         | Various 3rd party libraries and SDKs                                                              |
 
@@ -19,16 +18,18 @@ Tried to follow the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2
 as best as possible. Project structure follows as below:
 
 ```
-    View (:app-main) 
+    View (:app-main)
       |
   ViewModel (:app-main)
       |
    UseCase (:app-core)
       |
-  Repository (:app-data)
+  Repository (:app-core)
       |
-  DataSource (:app-data)
+  DataSource (:app-core)w
 ```
+
+All DataSources and DTOs must be scoped with `internal` visibility for encapsulation.
 
 ## Roles and responsibilities for components:
 

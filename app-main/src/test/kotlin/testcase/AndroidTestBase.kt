@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
  * @since 12 - Nov - 2018
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(application = TestAwesomeApplication::class)
+@Config(application = TestAwesomeApplication::class, maxSdk = 28)
 abstract class AndroidTestBase : UnitTestBase() {
     private val testBackgroundScheduler = TestScheduler()
 

@@ -1,9 +1,9 @@
 package com.github.fj.android.awesomeapp.inject.module
 
 import com.github.fj.android.annotation.AllOpen
-import com.github.fj.android.awesomeapp.CoreApplicationHolder
-import com.github.fj.android.awesomeapp.repository.photo.PhotoRepository
-import com.github.fj.android.awesomeapp.uc.photo.PhotoUseCase
+import com.github.fj.android.awesomeapp.core.photo.repository.PhotoRepository
+import com.github.fj.android.awesomeapp.core.photo.usecase.PhotoUseCase
+import com.github.fj.android.awesomeapp.core.photo.usecase.PhotoUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,17 +13,10 @@ import javax.inject.Singleton
  * @since 12 - Nov - 2018
  */
 @AllOpen
-@Module
+@Module(includes = [RepositoryModule::class])
 class UseCaseModule {
-    init {
-        val application = CoreApplicationHolder.instance
-
-        if (!application.isUnderInstrumentation) {
-            Repositories.init(application.baseApiUrl, application.coreLoggingLevel)
-        }
-    }
-
     @Provides
     @Singleton
-    fun photoUseCase() = PhotoUseCase.create(Repositories.get(PhotoRepository::class))
+    internal fun photoUseCase(photoRepo: PhotoRepository): PhotoUseCase =
+        PhotoUseCaseImpl(photoRepo)
 }

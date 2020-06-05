@@ -1,5 +1,6 @@
 package com.github.fj.android
 
+import androidx.annotation.CallSuper
 import timber.log.Timber
 
 /**
@@ -15,7 +16,8 @@ abstract class SingletonHolderTemplate<T> {
     val instance: T
         get() = _instance ?: throw IllegalStateException("Singleton instance is not provided")
 
-    fun setInstance(instance: T?) {
+    @CallSuper
+    open fun setInstance(instance: T?) {
         if (this._instance != null && instance != null) {
             val msg = "'%s' will be overwritten to '%s'. Is this behaviour intended?"
             Timber.w(msg, this._instance?.toString() ?: "null", instance)

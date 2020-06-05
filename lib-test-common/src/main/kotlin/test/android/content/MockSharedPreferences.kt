@@ -30,11 +30,11 @@ class MockSharedPreferences : SharedPreferences {
     override fun getFloat(key: String, defValue: Float): Float =
         sPrefMap[key] as? Float ?: defValue
 
-    override fun getString(key: String, defValue: String): String =
+    override fun getString(key: String, defValue: String?): String? =
         sPrefMap[key] as? String ?: defValue
 
     @Suppress("UNCHECKED_CAST")
-    override fun getStringSet(key: String, defValues: Set<String>): Set<String> =
+    override fun getStringSet(key: String, defValues: Set<String>?): Set<String>? =
         sPrefMap[key] as? Set<String> ?: defValues
 
     override fun edit(): Editor = MockEditor(this)
@@ -75,13 +75,21 @@ class MockSharedPreferences : SharedPreferences {
             return this
         }
 
-        override fun putString(key: String, value: String): Editor {
-            pendingData[key] = DataWrapper(PUT, value)
+        override fun putString(key: String, value: String?): Editor {
+            if (value == null) {
+                pendingData[key] = DataWrapper(REMOVE, Unit)
+            } else {
+                pendingData[key] = DataWrapper(PUT, value)
+            }
             return this
         }
 
-        override fun putStringSet(key: String, values: MutableSet<String>): Editor {
-            pendingData[key] = DataWrapper(PUT, values)
+        override fun putStringSet(key: String, values: MutableSet<String>?): Editor {
+            if (values == null) {
+                pendingData[key] = DataWrapper(REMOVE, Unit)
+            } else {
+                pendingData[key] = DataWrapper(PUT, values)
+            }
             return this
         }
 

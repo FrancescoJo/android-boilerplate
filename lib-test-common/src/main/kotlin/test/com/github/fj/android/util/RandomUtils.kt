@@ -86,6 +86,7 @@ fun <T : Enum<*>> randomEnum(klass: KClass<T>): T {
 fun <T : Enum<*>> randomEnum(klass: KClass<T>, acceptFunction: ((T) -> Boolean)?): T {
     // Not supported in Kotlin reflection
     val constants = klass.java.enumConstants
+        ?: throw IllegalArgumentException("$klass does not hold any enum constants")
     var randomValue: T
     var acceptFuncResult: Boolean
 
@@ -107,7 +108,8 @@ private fun <T> elementAt(collection: Collection<T>, targetIdx: Int): T {
     throw UnsupportedOperationException("targetIdx: " + targetIdx + ", collection size: " + collection.size)
 }
 
-private const val RANDOM_ALPHANUMERIC_CHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890"
+private const val RANDOM_ALPHANUMERIC_CHARS =
+    "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890"
 private const val RANDOM_CAPITAL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZz1234567890"
 
 private fun getRandomAlphaNumericStringInternal(length: Int, pool: CharSequence): String {

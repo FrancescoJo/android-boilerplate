@@ -15,12 +15,24 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":app-data")
     implementation project(":app-lib")
 
     implementation "androidx.appcompat:appcompat:$ver_androidx_appcompat"
     implementation "androidx.core:core-ktx:$ver_androidx_ktx"
     implementation "androidx.lifecycle:lifecycle-extensions:$ver_androidx_lifecycle"
+
+    // OkHttp3
+    implementation "com.squareup.okhttp3:okhttp:$ver_okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$ver_okhttp"
+
+    // Retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$ver_retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$ver_retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$ver_retrofit"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:$ver_moshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$ver_moshi"
 
     testImplementation project(":lib-test-common")
 }

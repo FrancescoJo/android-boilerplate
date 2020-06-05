@@ -1,13 +1,13 @@
 package testcase.ui
 
-import com.github.fj.android.awesomeapp.uc.photo.PhotoUseCase
+import com.github.fj.android.awesomeapp.core.photo.usecase.PhotoUseCase
 import com.github.fj.android.awesomeapp.ui.MainActivityViewModel
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import test.com.github.fj.android.awesomeapp.model.photo.randomImageDetails
+import test.com.github.fj.android.awesomeapp.photo.randomImageDetails
 import testcase.AndroidTestBase
 
 /**
@@ -45,9 +45,11 @@ class MainActivityViewModelSpec : AndroidTestBase() {
     @Test
     fun `user can observe error upon fetching photo list`() {
         // given:
-        `when`(mockPhotoUc.load()).thenReturn(Single.error(
-            UnsupportedOperationException("Test")
-        ))
+        `when`(mockPhotoUc.load()).thenReturn(
+            Single.error(
+                UnsupportedOperationException("Test")
+            )
+        )
 
         // when:
         val result = sut.observePhotos(true).test()

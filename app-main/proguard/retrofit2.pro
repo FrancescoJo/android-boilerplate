@@ -1,1 +1,1 @@
-app-data/proguard/retrofit2.pro
+../../app-core/proguard/retrofit2.pro

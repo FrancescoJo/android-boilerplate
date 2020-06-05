@@ -2,8 +2,8 @@ package com.github.fj.android.awesomeapp.ui
 
 import com.github.fj.android.annotation.AllOpen
 import com.github.fj.android.awesomeapp.lifecycle.RxViewModel
-import com.github.fj.android.awesomeapp.model.photo.ImageDetail
-import com.github.fj.android.awesomeapp.uc.photo.PhotoUseCase
+import com.github.fj.android.awesomeapp.core.photo.model.ImageDetail
+import com.github.fj.android.awesomeapp.core.photo.usecase.PhotoUseCase
 import com.github.fj.android.rx.RecreatingPublishSubject
 import com.github.fj.android.rx.onIoThread
 import com.github.fj.android.rx.toAndroidAsync
