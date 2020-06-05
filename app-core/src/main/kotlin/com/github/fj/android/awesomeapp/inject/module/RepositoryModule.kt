@@ -19,6 +19,7 @@ internal class RepositoryModule {
     @Provides
     @Singleton
     internal fun photoRepository(
-        apiDataSrc: PhotoApiDataSource, memCachedDataSrc: PhotoApiMemDataSource
+        apiDataSrc: PhotoApiDataSource,
+        memCachedDataSrc: PhotoApiMemDataSource
     ): PhotoRepository = PhotoRepositoryImpl(apiDataSrc, memCachedDataSrc)
 }

@@ -7,6 +7,7 @@ import timber.log.Timber
  * @author Francesco Jo(nimbusob@gmail.com)
  * @since 28 - May - 2020
  */
+@Suppress("TooManyFunctions")
 class SharedPreferencesWrapper(private val sPref: SharedPreferences) {
     private val listeners = LinkedHashSet<SharedPreferences.OnSharedPreferenceChangeListener>()
 

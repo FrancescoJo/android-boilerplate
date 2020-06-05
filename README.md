@@ -1,14 +1,14 @@
 # AwesomeApp
 
 An Android boilerplate project setup for Rapid Application Development. If you are interested,
-please read [#pros-and-cons] before start.
+please read [pros-and-cons](#pros-and-cons) before start.
 
 ## Project structure
 
 | Module name     | Description                                                                                       |
 | :---            | :---                                                                                              |
 | app-main        | Contains UI and UI manipulation logic. Directly depends on `app-core`, `app-lib`, `lib-xxx`, etc. |
-| app-core        | Business logic layer, abstracts business logic and `DataSource`. Consumed only by `app-main`.     |
+| app-core        | Business logic layer, abstracts business logic and `DataSource`.                                  |
 | app-lib         | Library logic layer, independent to business logic                                                |
 | lib-xxx         | Various 3rd party libraries and SDKs                                                              |
 
@@ -26,7 +26,7 @@ as best as possible. Project structure follows as below:
       |
   Repository (:app-core)
       |
-  DataSource (:app-core)w
+  DataSource (:app-core)
 ```
 
 All DataSources and DTOs must be scoped with `internal` visibility for encapsulation.

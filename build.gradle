@@ -17,7 +17,7 @@ buildscript {
         ver_material = "1.1.0"
 
         // 3rdparty
-        ver_rxjava = "2.2.9"
+        ver_rxjava = "2.2.13"
         ver_rxkotlin = "2.3.0"
         ver_rxandroid = "2.1.1"
         ver_retrofit = "2.8.1"
