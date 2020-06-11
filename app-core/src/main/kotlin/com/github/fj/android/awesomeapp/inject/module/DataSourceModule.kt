@@ -3,6 +3,7 @@ package com.github.fj.android.awesomeapp.inject.module
 import com.github.fj.android.annotation.AllOpen
 import com.github.fj.android.awesomeapp.core.photo.datasource.PhotoApiDataSource
 import com.github.fj.android.awesomeapp.core.photo.datasource.PhotoApiMemDataSource
+import com.github.fj.android.awesomeapp.core.photo.datasource.PhotoApiService
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,13 +13,13 @@ import javax.inject.Singleton
  * @since 05 - Jun - 2020
  */
 @AllOpen
-@Module
+@Module(includes = [ApiServiceModule::class])
 internal class DataSourceModule {
     @Provides
     @Singleton
-    internal fun photoApiDataSource() = PhotoApiDataSource()
+    fun photoApiDataSource(apiSvc: PhotoApiService) = PhotoApiDataSource(apiSvc)
 
     @Provides
     @Singleton
-    internal fun photoMemDataSource() = PhotoApiMemDataSource()
+    fun photoMemDataSource() = PhotoApiMemDataSource()
 }

@@ -98,14 +98,14 @@ abstract class Dagger2ViewModelRxActivity<T : ViewModel> : DaggerAppCompatActivi
     }
 
     protected fun Disposable.until(event: Lifecycle.Event) {
-        disposablesOf(event).add(this)
-    }
-
-    private fun disposablesOf(event: Lifecycle.Event): CompositeDisposable {
         if (disposables[event]?.isDisposed == true) {
             disposables[event] = CompositeDisposable()
         }
 
+        disposablesOf(event).add(this)
+    }
+
+    private fun disposablesOf(event: Lifecycle.Event): CompositeDisposable {
         return disposables[event]!!
     }
 }

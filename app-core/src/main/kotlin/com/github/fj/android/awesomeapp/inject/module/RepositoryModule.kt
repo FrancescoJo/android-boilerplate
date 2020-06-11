@@ -18,7 +18,7 @@ import javax.inject.Singleton
 internal class RepositoryModule {
     @Provides
     @Singleton
-    internal fun photoRepository(
+    fun photoRepository(
         apiDataSrc: PhotoApiDataSource,
         memCachedDataSrc: PhotoApiMemDataSource
     ): PhotoRepository = PhotoRepositoryImpl(apiDataSrc, memCachedDataSrc)
