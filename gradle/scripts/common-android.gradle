@@ -1,12 +1,12 @@
 // This configuration works only if 'com.android.application' or 'com.android.library' Gradle plugin
 // is applied in your build configuration.
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.1"
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
     }
 
     compileOptions {

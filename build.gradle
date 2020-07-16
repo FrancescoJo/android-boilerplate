@@ -32,7 +32,7 @@ buildscript {
         ver_jacoco = "0.8.5"
         ver_androidx_test = "1.2.0"
         ver_robolectric = "4.3"
-        ver_mockito_core = "3.2.4"
+        ver_mockito_core = "3.3.3"
         ver_hamcrest = "2.2"
         ver_junit_vintage = "4.13"
     }
@@ -43,7 +43,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver_kotlin"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$ver_kotlin"
 

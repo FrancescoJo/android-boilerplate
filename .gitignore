@@ -20,6 +20,7 @@ build/
 bin/
 gen/
 out/
+jacoco.exec
 
 ### IntelliJ IDEA
 .idea/

@@ -12,11 +12,51 @@
  *
  * Hope JUnit 5 (the worst, among Spek2 / Spock) is supported in Android testing world soon.
  */
+apply plugin: "jacoco"
+
 android {
+    buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
+    }
+
     testOptions {
         // For Robolectric test
         unitTests.includeAndroidResources = true
     }
+}
+
+jacoco {
+    toolVersion = "$ver_jacoco"
+}
+
+// We can't use "Java" plugin on Android, thus we should define task manually
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      '**/data/models/*']
+    def debugTree = fileTree(
+            dir: "$buildDir/tmp/kotlin-classes/debug",
+            excludes: fileFilter
+    )
+    def mainSrcs = files(["$projectDir/src/main/java", "$projectDir/src/main/kotlin"])
+
+    sourceDirectories.setFrom(mainSrcs)
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
 
 dependencies {
