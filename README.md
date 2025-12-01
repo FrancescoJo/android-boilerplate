@@ -1,3 +1,7 @@
+# Deprecated
+
+Since the author abandoned Android app development to against to Google's anti-free policy [Prevent APK sideloading](https://9to5google.com/2025/08/25/android-apps-developer-verification/), this repository is no longer maintained.
+
 # AwesomeApp
 
 An Android boilerplate project setup for Rapid Application Development. If you are interested,
